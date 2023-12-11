@@ -7,6 +7,7 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Book Collector</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+  <script src="https://kit.fontawesome.com/924f3a25f0.js" crossorigin="anonymous"></script>
   <link rel="stylesheet" href="{% static 'css/style.css' %}">
 </head>
 <body>
@@ -14,11 +15,11 @@
     <nav>
       <div class="nav-wrapper">
         <ul>
-          <li><a href="/" class="left brand-logo">&nbsp;&nbsp;Book Collector</a></li>
+          <li><a href="/" class="left brand-logo fa-solid fa-book">&nbsp;&nbsp;Book Collector</a></li>
         </ul>
         <ul class="right">
-          <li><a href="/about">About</a></li>
-          <li><a href="/books">View All My Books</a></li>
+          <li><a href="{% url 'about' %}">About</a></li>
+          <li><a href="{% url 'index' %}">View All My Books</a></li>
         </ul>
       </div>
     </nav>

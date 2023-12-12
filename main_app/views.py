@@ -1,11 +1,19 @@
+from typing import Any
 from django.shortcuts import render
-from django.views.generic import ListView
+from django.views.generic import ListView, DetailView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 
 from .models import Book
 
 class BookList(ListView):
     model = Book
+
+class BookDetail(DetailView):
+    model = Book
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['book_list'] = Book.objects.all()
+        return context
 
 class BookCreate(CreateView):
     model = Book
@@ -31,6 +39,6 @@ def about(request):
 #     books = Book.objects.all()
 #     return render(request, 'books/index.html', {'books': books})
 
-def books_detail(request, book_id):
-    book = Book.objects.get(id=book_id)
-    return render(request, 'books/detail.html', {'book': book})
+# def books_detail(request, book_id):
+#     book = Book.objects.get(id=book_id)
+#     return render(request, 'books/detail.html', {'book': book})

@@ -8,4 +8,4 @@ class Book(models.Model):
     description = models.TextField(max_length=250)
 
     def get_absolute_url(self):
-        return reverse('detail', kwargs={'book_id': self.id})
+        return reverse('detail', kwargs={'pk': self.pk})

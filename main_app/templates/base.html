@@ -15,11 +15,12 @@
     <nav>
       <div class="nav-wrapper">
         <ul>
-          <li><a href="/" class="left brand-logo fa-solid fa-book">&nbsp;&nbsp;Book Collector</a></li>
+          <li><a href="{% url 'home' %}" class="left brand-logo fa-solid fa-book">&nbsp;&nbsp;Book Collector</a></li>
         </ul>
         <ul class="right">
-          <li><a href="{% url 'about' %}">About</a></li>
+          <li><a href="{% url 'books_create' %}">Add a Book</a></li>
           <li><a href="{% url 'index' %}">View All My Books</a></li>
+          <li><a href="{% url 'about' %}">About</a></li>
         </ul>
       </div>
     </nav>

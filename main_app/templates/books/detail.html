@@ -9,6 +9,10 @@
     <p>Author: {{ book.author }}</p>
     <p>Description: {{ book.description|linebreaks }}</p>
   </div>
+  <div class="card-action">
+    <a href="{% url 'books_update' book.id %}">Update Book</a>
+    <a href="{% url 'books_delete' book.id %}">Delete Book</a>
+  </div>
 </div>
 
 {% endblock %}

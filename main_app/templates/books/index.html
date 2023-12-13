@@ -1,9 +1,9 @@
-<!-- {% extends 'base.html' %}
+{% extends 'base.html' %}
 {% block content %}
 
 <h3>Book List</h3>
 <ul>
-    {% for book in object_list %}
+    {% for book in books %}
     <a href="{% url 'detail' book.id %}" style="text-decoration: none">  
         <div class="card">
           <div class="card-content">
@@ -15,4 +15,4 @@
       </a>
     {% endfor %}
 </ul>
-{% endblock %} -->
+{% endblock %}

@@ -1,15 +1,45 @@
 body {
+    /* font-family: 'Architects Daughter', cursive; */
+    font-family: 'Kalnia', serif;
+    /* font-family: 'Shadows Into Light Two', cursive; */
     display: flex;
     min-height: 100vh;
     flex-direction: column;
+    background-color: rgba(0, 0, 255, 0.06);
   }
   
   main {
     flex: 1 0 auto;
   }
-  
-  footer.page-footer {
-    padding-top: 0;
-    text-align: right;
+  div.nav-wrapper {
+    background-color: rgba(128, 0, 128, 0.336);
   }
 
+  span.card-title {
+    color: purple
+  }
+
+  div.card {
+    background-color: beige;
+    color: black;
+    box-shadow: 10px 10px rgba(128, 0, 128, 0.336);    
+  }
+
+  footer.page-footer {
+    padding-top: 0;
+    text-align: right; 
+    background-color: rgba(128, 0, 128, 0.336);
+  }
+
+  /* input#id_finished {
+    border: 1px solid red !important;
+    background-color: red;
+    width: 200px;
+  } */
+  
+  [type="checkbox"]:not(:checked), [type="checkbox"]:checked {
+    position: unset;
+    opacity: 1;
+    pointer-events:all
+}
+  

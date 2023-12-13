@@ -8,4 +8,32 @@ class Book(models.Model):
     description = models.TextField(max_length=250)
 
     def get_absolute_url(self):
-        return reverse('detail', kwargs={'pk': self.pk})
+        return reverse('detail', kwargs={'book_id': self.pk})
+
+# a tuple of tuples for our ratings
+RATINGS = (
+    ('5', "5 Stars"),
+    ('4', "4 Stars"),
+    ('3', "3 Stars"),
+    ('2', "2 Stars"),
+    ('1', "1 Star"),
+)
+
+class Review(models.Model):
+    date = models.DateField()
+    finished = models.BooleanField(
+        default=False,
+    )
+    rating = models.CharField(
+        max_length=1,
+        choices = RATINGS,
+        default=RATINGS[0][0],
+        )
+    review = models.CharField(max_length=250)
+    book = models.ForeignKey(Book, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f"{self.get_rating_display()} on {self.date}"
+    
+    class Meta:
+        ordering = ['-date']

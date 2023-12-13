@@ -1,4 +1,4 @@
-<!-- {% extends 'base.html' %}
+{% extends 'base.html' %}
 {% block content %}
 
 <h3>Book Details</h3>
@@ -7,9 +7,9 @@
   <div class="col s6">
     <div class="card">
       <div class="card-content">
-        <span class="card-title">{{ object.name }}</span>
-        <p>Author: {{ object.author }}</p>
-        <p>Description: {{ object.description|linebreaks }}</p>
+        <span class="card-title">{{ book.name }}</span>
+        <p>Author: {{ book.author }}</p>
+        <p>Description: {{ book.description|linebreaks }}</p>
       </div>
       <div class="card-action">
         <a href="{% url 'books_update' book.id %}">Update Book</a>
@@ -19,6 +19,11 @@
   </div>
 
   <div class="col s6">
+	<form action="{% url 'add_review' book.id %}" method="POST">
+		{% csrf_token %}
+			{{ review_form.as_p }}
+			<button type="submit" class="btn">Add Review</button>
+	</form>
     <table class="striped">
       <thead>
         <tr><th>Date</th><th>Finished</th><th>Rating</th><th>Review</th></tr>
@@ -37,4 +42,21 @@
   </div>
 </div>
 
-{% endblock %} -->
+<script>
+	// Initialize the Date Selector
+	const dateEl = document.getElementById('id_date');
+	M.Datepicker.init(dateEl, {
+		format: 'yyyy-mm-dd',
+		defaultDate: new Date(),
+		setDefaultDate: true,
+		autoClose: true
+	});
+	// Initializes the checkbox
+	
+	// Initialize the select from materialize to select the Rating:
+	const select = document.querySelector('select')
+	M.FormSelect.init(select, {})
+	// Initialize the Review:
+</script>
+
+{% endblock %}

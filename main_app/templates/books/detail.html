@@ -2,7 +2,7 @@
 {% block content %}
 
 <h3>Book Details</h3>
-
+<!-- Book Details -->
 <div class="row">
   <div class="col s6">
     <div class="card">
@@ -17,14 +17,15 @@
       </div>
     </div>
   </div>
-
+  <!-- Book Review Form -->
   <div class="col s6">
 	<form action="{% url 'add_review' book.id %}" method="POST">
 		{% csrf_token %}
 			{{ review_form.as_p }}
 			<button type="submit" class="btn">Add Review</button>
 	</form>
-    <table class="striped">
+    <!-- Book Reviews -->
+	<table class="striped centered responsive-table">
       <thead>
         <tr><th>Date</th><th>Finished</th><th>Rating</th><th>Review</th></tr>
       </thead>
@@ -42,6 +43,58 @@
   </div>
 </div>
 
+<hr>
+<!-- Assigned Bookstores -->
+<div class="row">
+  <div class="col s6">
+    <h3>{{ book.name }}'s Bookstores</h3>
+    {% if book.bookstore.count %}
+      {% for bookstore in book.bookstores.all %}
+        <div class="card">
+          <div class="card-content">
+            <span class="card-title">
+              A <span {{ bookstore.name }}></span> {{ bookstore.location }}
+            </span>
+			<div class="card-action">
+				<form action="{% url 'unassoc_bookstore' book.id bookstore.id %}" method="POST">
+					{% csrf_token %}
+					<button type="submit" class="btn">Remove</button>
+				</form>
+			  </div>
+          </div>
+        </div>
+      {% endfor %}
+    {% else %}
+      <h5>Not Available in Stores</h5>
+    {% endif %}
+  </div>
+
+  <!-- Available bookstores -->
+  <div class="col s6">
+    <h3>Available Bookstores</h3>
+    {% if bookstores.count %}
+      {% for bookstore in bookstores.all %}
+        <div class="card">
+          <div class="card-content">
+            <span class="card-title">
+              <span>{{ bookstore.name }}</span> {{ bookstore.location }}
+            </span>
+          </div>
+          <div class="card-action">
+            <form action="{% url 'assoc_bookstore' book.id bookstore.id %}" method="POST">
+				{% csrf_token %}
+				<button type="submit" class="btn">Add</button>
+            </form>
+          </div>
+        </div>
+      {% endfor %}
+    {% else %}
+      <h5>{{book.name}} Already Found at all Bookstores Available</h5>
+    {% endif %}
+  </div>
+</div>
+
+<!-- Materialize Initializers -->
 <script>
 	// Initialize the Date Selector
 	const dateEl = document.getElementById('id_date');
@@ -51,12 +104,9 @@
 		setDefaultDate: true,
 		autoClose: true
 	});
-	// Initializes the checkbox
-	
 	// Initialize the select from materialize to select the Rating:
 	const select = document.querySelector('select')
 	M.FormSelect.init(select, {})
-	// Initialize the Review:
 </script>
 
 {% endblock %}

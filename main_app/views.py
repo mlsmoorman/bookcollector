@@ -1,21 +1,20 @@
 from django.shortcuts import render, redirect
-# from django.views.generic import ListView, DetailView
+from django.views.generic import ListView, DetailView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 
-from .models import Book
+from .models import Book, Bookstore
 from .forms import ReviewForm
 
-# Create Class Based Views (CBV's) here.
-# class BookList(ListView):
-#     model = Book
+# Bookstore Associate/Unassociate Views:
+def assoc_bookstore(request, book_id, boostore_id):
+    book = Book.objects.get(id=book_id)
+    book.bookstore.add(bookstore_id)
+    
+def unassoc_bookstore(request, book_id, bookstore_id):
+    book = Book.objects.get(id=book_id)
+    book.bookstore.remove(bookstore_id)
 
-# class BookDetail(DetailView):
-#     model = Book
-#     def get_context_data(self, **kwargs):
-#         context = super().get_context_data(**kwargs)
-#         context['book_list'] = Book.objects.all()
-#         return context         
-
+# Create Class Based Views (CBV's) for Books:
 class BookCreate(CreateView):
     model = Book
     fields = '__all__'
@@ -28,8 +27,26 @@ class BookDelete(DeleteView):
     model = Book
     success_url = '/books'
 
+# Create Class Based Views (CBV's) for Bookstores:
+class BookstoreList(ListView):
+    model = Bookstore
+    
+class BookstoreDetail(DetailView):
+    model = Bookstore
+    
+class BookstoreCreate(CreateView):
+    model = Bookstore
+    fields = '__all__'
+    
+class BookstoreUpdate(UpdateView):
+    model = Bookstore
+    fields = '__all__'
+    
+class BookstoreDelete(DeleteView):
+    model = Bookstore
+    success_url = '/bookstores/'
 
-# Create base views here.
+# Base views:
 def home(request):
     return render(request, 'home.html')
 
@@ -45,6 +62,7 @@ def books_detail(request, book_id):
     review_form = ReviewForm()
     return render(request, 'books/detail.html', {'book':book, 'review_form':review_form})
 
+# Review view:
 def add_review(request, book_id):
     form = ReviewForm(request.POST)
     if form.is_valid():
@@ -52,3 +70,4 @@ def add_review(request, book_id):
         new_review.book_id = book_id
         new_review.save()
     return redirect('detail', book_id=book_id)
+

@@ -21,6 +21,8 @@
           <li><a href="/" class="left brand-logo">&nbsp;&nbsp;The Book Collector</a></li>
         </ul>
         <ul class="right">
+          <li><a href="{% url 'bookstores_create' %}">Add a Bookstore</a></li>
+					<li><a href="{% url 'bookstores_index' %}">View All Bookstores</a></li>
           <li><a href="{% url 'books_create' %}">Add a Book</a></li>
           <li><a href="{% url 'index' %}">View All My Books</a></li>
           <li><a href="{% url 'about' %}">About</a></li>

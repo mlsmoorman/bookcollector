@@ -2,13 +2,26 @@ from django.db import models
 from django.urls import reverse
 
 # Create your models here.
+class Bookstore(models.Model):
+    name = models.CharField(max_length=100)
+    location = models.CharField(max_length=100)
+    
+    def __str__(self):
+        return self.name
+    
+    def get_absolute_url(self):
+        return reverse('bookstores_detail', kwargs={'pk': self.id})
+
+
 class Book(models.Model):
     name = models.CharField(max_length=100)
     author = models.CharField(max_length=100)
     description = models.TextField(max_length=250)
-
+    bookstores = models.ManyToManyField(Bookstore)
+    
     def get_absolute_url(self):
         return reverse('detail', kwargs={'book_id': self.pk})
+
 
 # a tuple of tuples for our ratings
 RATINGS = (

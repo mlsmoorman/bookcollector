@@ -31,12 +31,13 @@ body {
     background-color: rgba(128, 0, 128, 0.336);
   }
 
-  /* input#id_finished {
-    border: 1px solid red !important;
-    background-color: red;
-    width: 200px;
-  } */
-  
+ label {
+  color: black;
+  font-size: medium;
+  text-shadow: 0 0 20px rgb(142, 2, 142);
+ }
+
+  /* Allows for checkbox on the Review Form to show up: */
   [type="checkbox"]:not(:checked), [type="checkbox"]:checked {
     position: unset;
     opacity: 1;

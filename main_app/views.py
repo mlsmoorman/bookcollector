@@ -6,13 +6,15 @@ from .models import Book, Bookstore
 from .forms import ReviewForm
 
 # Bookstore Associate/Unassociate Views:
-def assoc_bookstore(request, book_id, boostore_id):
+def assoc_bookstore(request, book_id, bookstore_id):
     book = Book.objects.get(id=book_id)
-    book.bookstore.add(bookstore_id)
+    book.bookstores.add(bookstore_id)
+    return redirect('detail', book_id=book_id)    
     
 def unassoc_bookstore(request, book_id, bookstore_id):
     book = Book.objects.get(id=book_id)
-    book.bookstore.remove(bookstore_id)
+    book.bookstores.remove(bookstore_id)
+    return redirect('detail', book_id=book_id)
 
 # Create Class Based Views (CBV's) for Books:
 class BookCreate(CreateView):
@@ -59,8 +61,10 @@ def books_index(request):
 
 def books_detail(request, book_id):
     book = Book.objects.get(id=book_id)
+    id_list = book.bookstores.all().values_list('id')
+    bookstores_books_doesnt_have = Bookstore.objects.exclude(id__in=id_list)
     review_form = ReviewForm()
-    return render(request, 'books/detail.html', {'book':book, 'review_form':review_form})
+    return render(request, 'books/detail.html', {'book':book, 'review_form':review_form, 'bookstores':bookstores_books_doesnt_have})
 
 # Review view:
 def add_review(request, book_id):

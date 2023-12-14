@@ -17,10 +17,11 @@ class Book(models.Model):
     name = models.CharField(max_length=100)
     author = models.CharField(max_length=100)
     description = models.TextField(max_length=250)
+    # Many to Many:
     bookstores = models.ManyToManyField(Bookstore)
     
     def get_absolute_url(self):
-        return reverse('detail', kwargs={'book_id': self.pk})
+        return reverse('detail', kwargs={'book_id': self.id})
 
 
 # a tuple of tuples for our ratings

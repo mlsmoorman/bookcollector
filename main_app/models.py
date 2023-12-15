@@ -1,5 +1,6 @@
 from django.db import models
 from django.urls import reverse
+from django.contrib.auth.models import User
 
 # Create your models here.
 class Bookstore(models.Model):
@@ -19,6 +20,7 @@ class Book(models.Model):
     description = models.TextField(max_length=250)
     # Many to Many:
     bookstores = models.ManyToManyField(Bookstore)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     
     def get_absolute_url(self):
         return reverse('detail', kwargs={'book_id': self.id})

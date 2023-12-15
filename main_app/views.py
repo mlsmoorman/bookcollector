@@ -2,8 +2,28 @@ from django.shortcuts import render, redirect
 from django.views.generic import ListView, DetailView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 
-from .models import Book, Bookstore
+from .models import Book, Bookstore, Photo
 from .forms import ReviewForm
+
+import boto3
+import uuid
+import os
+
+
+def add_photo(request, book_id):
+    photo_file = request.FILES.get('photo-file', None)
+    if photo_file:
+        s3 = boto3.client('s3')
+        key = f"bookcollector/{uuid.uuid4().hex[:6]}{photo_file.name[photo_file.name.rfind('.'):]}"
+        try:
+            bucket = os.environ['BUCKET_NAME']
+            s3.upload_fileobj(photo_file, bucket, key)
+            photo_url = f"{os.environ['S3_BASE_URL']}{bucket}/{key}"
+            Photo.objects.create(url=photo_url, book_id=book_id)
+        except Exception as e:
+            print('An error uploading to AWS')
+            print(e)
+    return redirect('detail', book_id=book_id)
 
 # Bookstore Associate/Unassociate Views:
 def assoc_bookstore(request, book_id, bookstore_id):

@@ -13,6 +13,7 @@ urlpatterns = [
 	
     # One to Many
     path('books/<int:book_id>/add_review/', views.add_review, name='add_review'),
+    path('books/<int:book_id>/add_photo/', views.add_photo, name='add_photo'),
     
     # Many to Many
     path('books/<int:book_id>/assoc_bookstore/<int:bookstore_id>', views.assoc_bookstore, name='assoc_bookstore'),

@@ -24,6 +24,14 @@ class Book(models.Model):
         return reverse('detail', kwargs={'book_id': self.id})
 
 
+class Photo(models.Model):
+    url = models.CharField(max_length=200)
+    book = models.ForeignKey(Book, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f'Photo for book_id: {self.book_id} @{self.url}'
+    
+
 # a tuple of tuples for our ratings
 RATINGS = (
     ('5', "5 Stars"),
